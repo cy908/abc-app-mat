@@ -1,0 +1,14 @@
+.mat-card {
+  padding: 8px;
+
+  .mat-card-title {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin-bottom: 0;
+
+    .mat-icon {
+      font-size: 20px;
+    }
+  }
+}

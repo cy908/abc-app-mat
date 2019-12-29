@@ -1,0 +1,43 @@
+<div class="app-info" [@slideToLeft]>
+  <mat-toolbar>
+    <button type="button" mat-flat-button color="warn" (click)="goBack()">
+      <mat-icon>undo</mat-icon>
+      <span>返回</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">通知详情</span>
+    </button>
+  </mat-toolbar>
+  <mat-grid-list [cols]="1" rowHeight="80px" *ngIf="!!notice">
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>通知标题</b><b>：</b></span>
+      <span>{{ notice.title }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list [cols]="cols" rowHeight="80px" *ngIf="!!notice">
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>开始日期</b><b>：</b></span>
+      <span>{{ notice.startTime | date: 'yyyy-MM-dd' }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>结束日期</b><b>：</b></span>
+      <span>{{ notice.endTime | date: 'yyyy-MM-dd' }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list [cols]="1" rowHeight="200px" *ngIf="!!notice">
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>通知内容</b><b>：</b></span>
+      <div class="notice-warp scrollbar" [innerHTML]="getHtml(notice.content)">
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

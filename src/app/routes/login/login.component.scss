@@ -1,0 +1,33 @@
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .app-content {
+    overflow-y: auto;
+
+    .app-card {
+      margin-top: 100px;
+      margin-bottom: 50px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 400px;
+      min-width: 300px;
+
+      .app-form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .app-form>* {
+        width: 100%;
+      }
+    }
+  }
+
+  .app-footer {
+    font-size: 12px;
+    height: 20px;
+  }
+}

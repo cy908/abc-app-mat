@@ -1,0 +1,62 @@
+<div class="app-form" [@slideToLeft]>
+  <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-toolbar>
+      <button type="button" mat-flat-button color="warn" (click)="goBack()">
+        <mat-icon>undo</mat-icon>
+        <span>返回</span>
+      </button>
+      <span>&nbsp;</span>
+      <button type="submit" mat-flat-button color="primary">
+        <mat-icon>save</mat-icon>
+        <span>保存</span>
+      </button>
+      <span>&nbsp;</span>
+      <mat-checkbox formControlName="keepOn">继续添加</mat-checkbox>
+      <span class="fill-space"></span>
+      <button mat-button disabled *ngIf="!!dict">
+        <span class="tp">字典：</span>
+        <span class="ta">{{ dict.name }}</span>
+      </button>
+      <span class="fill-space"></span>
+      <button mat-button disabled>
+        <mat-icon color="primary">place</mat-icon>
+        <span class="ta">添加字典项</span>
+      </button>
+    </mat-toolbar>
+    <mat-grid-list [cols]="cols" rowHeight="80px">
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="ID" formControlName="id" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="名称" formControlName="name" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="代码" formControlName="code">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="排序" formControlName="order">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <span>&nbsp;&nbsp;</span>
+        <span><b>状态</b><b>：</b></span>
+        <mat-slide-toggle formControlName="enable" #statusToggle>
+          <span>{{ statusToggle.checked ? '启用' : '禁用' }}</span>
+        </mat-slide-toggle>
+        <span class="fill-space"></span>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="cols">
+        <mat-form-field>
+          <input matInput placeholder="备注" formControlName="note">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>

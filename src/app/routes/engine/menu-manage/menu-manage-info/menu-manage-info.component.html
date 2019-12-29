@@ -1,0 +1,83 @@
+<div class="app-info" [@slideToLeft]>
+  <mat-toolbar>
+    <button type="button" mat-flat-button color="warn" (click)="goBack()">
+      <mat-icon>undo</mat-icon>
+      <span>返回</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled *ngIf="!!parentMenu">
+      <span class="tp">父级菜单：</span>
+      <span class="ta">{{ parentMenu.name }}</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">菜单详情</span>
+    </button>
+  </mat-toolbar>
+  <mat-grid-list [cols]="cols" rowHeight="80px" *ngIf="!!menu">
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>名称</b><b>：</b></span>
+      <span>{{ menu.name }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>地址</b><b>：</b></span>
+      <span>{{ menu.url }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>图标</b><b>：</b></span>
+      <mat-icon color="primary" *ngIf="menu.order.length == menu.orderTopSize" [matTooltip]="menu.matIcon">
+        <span>{{ menu.matIcon }}</span>
+      </mat-icon>
+      <mat-icon color="accent" *ngIf="menu.order.length == menu.orderTopSize * 2" [matTooltip]="menu.matIcon">
+        <span>{{ menu.matIcon }}</span>
+      </mat-icon>
+      <mat-icon color="warn" *ngIf="menu.order.length > menu.orderTopSize * 2" [matTooltip]="menu.matIcon">
+        <span>{{ menu.matIcon }}</span>
+      </mat-icon>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>antd 图标</b><b>：</b></span>
+      <span>{{ menu.antdIcon }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>antd 图标主题</b><b>：</b></span>
+      <span>{{ menu.antdIconTheme }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>antd 图标双色</b><b>：</b></span>
+      <span>{{ menu.antdIconTwotone }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>排序</b><b>：</b></span>
+      <span>{{ menu.order }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>状态</b><b>：</b></span>
+      <mat-icon color="primary" *ngIf="menu.enable" matTooltip="启用">check_circle_outline</mat-icon>
+      <mat-icon color="warn" *ngIf="!menu.enable" matTooltip="禁用">highlight_off</mat-icon>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="cols">
+      <span>&nbsp;&nbsp;</span>
+      <span><b>备注</b><b>：</b></span>
+      <span>{{ menu.note }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,0 +1,85 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-size: 14px;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
+
+// -----
+
+.app-list,
+.app-info,
+.app-form {
+  button {
+    padding: 2px 6px;
+    line-height: 1.5;
+    min-width: 36px;
+  }
+
+  .mat-toolbar {
+    height: 48px;
+
+    .mat-form-field {
+      font-size: 16px;
+    }
+
+    .mat-checkbox {
+      font-size: 14px;
+    }
+  }
+
+  table {
+    width: 100%;
+
+    td {
+      min-width: 50px;
+      max-width: 200px;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    button {
+      margin: 2px;
+    }
+  }
+}
+
+.app-info,
+.app-form {
+  .mat-grid-list {
+    margin: 8px;
+
+    .mat-form-field {
+      width: 100%;
+      margin: 0 8px;
+    }
+
+    .mat-radio-button {
+      margin-left: 16px;
+    }
+
+    .mat-slide-toggle {
+      margin-left: 16px;
+    }
+  }
+
+  .accordion {
+    .title {
+      flex-basis: 0;
+      font-weight: bold;
+    }
+
+    .description {
+      flex-basis: 0;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

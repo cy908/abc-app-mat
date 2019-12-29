@@ -1,0 +1,26 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <h2 mat-dialog-title cdkDragHandle [style.cursor]="'move'">MaterialIcons by Google, Inc. (v3.0.1, 932 icons)</h2>
+  <div [style.width]="'calc(80vw - 100px)'" [style.height]="'calc(100vh - 200px)'" mat-dialog-content>
+    <mat-grid-list [cols]="cols" rowHeight="80px" *ngIf="!!icons">
+      <mat-grid-tile *ngFor="let icon of icons">
+        <mat-icon color="primary">{{ icon }}</mat-icon>
+        <span>&nbsp;</span>
+        <span>{{ icon }}</span>
+        <span class="fill-space"></span>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div mat-dialog-actions [align]="'end'">
+    <span class="fill-space"></span>
+    <form [style.width]="'calc(100% - 100px)'" [formGroup]="form" (ngSubmit)="submitForm()">
+      <mat-form-field [style.width]="'100%'">
+        <input matInput placeholder="关键字" formControlName="search">
+      </mat-form-field>
+    </form>
+    <span class="fill-space"></span>
+    <button mat-button color="accent" mat-dialog-close cdkFocusInitial>
+      <mat-icon>close</mat-icon>
+      <span>关闭</span>
+    </button>
+  </div>
+</div>

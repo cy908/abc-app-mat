@@ -1,0 +1,122 @@
+<div class="app-list" [@slideToTop]>
+  <mat-toolbar>
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <mat-form-field color="primary" floatLabel="never">
+        <input matInput placeholder="关键字" formControlName="search">
+      </mat-form-field>
+      <span>&nbsp;</span>
+      <button type="submit" mat-flat-button color="primary">
+        <mat-icon>search</mat-icon>
+        <span>查询</span>
+      </button>
+      <span>&nbsp;</span>
+      <button type="button" mat-flat-button color="accent" (click)="goAdd(0)">
+        <mat-icon>add</mat-icon>
+        <span>添加</span>
+      </button>
+    </form>
+    <span class="fill-space"></span>
+    <button color="warn" mat-icon-button (click)="goIcons()">
+      <mat-icon>help</mat-icon>
+    </button>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">菜单管理</span>
+    </button>
+  </mat-toolbar>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>序号</span>
+      </th>
+      <td mat-cell *matCellDef="let index = index">
+        <span>{{ index + 1 }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>名称</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div class="menu-warp">
+          <span *ngFor="let _ of element.order.substr(element.orderTopSize).split('')">&nbsp;&nbsp;</span>
+          <mat-icon color="primary" *ngIf="element.order.length == element.orderTopSize" [matTooltip]="element.matIcon">
+            <span>{{ element.matIcon }}</span>
+          </mat-icon>
+          <mat-icon color="accent" *ngIf="element.order.length == element.orderTopSize * 2"
+            [matTooltip]="element.matIcon">
+            <span>{{ element.matIcon }}</span>
+          </mat-icon>
+          <mat-icon color="warn" *ngIf="element.order.length > element.orderTopSize * 2" [matTooltip]="element.matIcon">
+            <span>{{ element.matIcon }}</span>
+          </mat-icon>
+          <span>&nbsp;</span>
+          <span>{{ element.name }}</span>
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="url">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>地址</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{ element.url }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="order">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>排序</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{ element.order }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="enable">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>状态</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon color="primary" *ngIf="element.enable" matTooltip="启用">check_circle_outline</mat-icon>
+        <mat-icon color="warn" *ngIf="!element.enable" matTooltip="禁用">highlight_off</mat-icon>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>操作</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button type="button" mat-stroked-button color="primary" (click)="goAdd(element.parentId)">
+          <span>添加同级</span>
+        </button>
+        <button type="button" mat-stroked-button color="accent" (click)="goAdd(element.id)">
+          <span>添加下级</span>
+        </button>
+        <button type="button" mat-flat-button color="primary" (click)="goInfo(element.id)">
+          <span>查看</span>
+        </button>
+        <button type="button" mat-flat-button color="accent" (click)="goEdit(element.id)">
+          <span>修改</span>
+        </button>
+        <button type="button" mat-flat-button color="warn" (click)="goDelete(element.id)">
+          <span>删除</span>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="['select', 'index', 'name', 'url', 'order', 'enable', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['select', 'index', 'name', 'url', 'order', 'enable', 'actions'];"></tr>
+  </table>
+  <mat-paginator [length]="totalCount" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    showFirstLastButtons (page)="page($event)"></mat-paginator>
+</div>

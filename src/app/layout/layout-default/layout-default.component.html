@@ -1,0 +1,124 @@
+<mat-toolbar class="app-header" color="primary">
+  <button mat-icon-button (click)="sidenavOpened = !sidenavOpened" [matTooltip]="sidenavOpened ? '关闭菜单' : '打开菜单'">
+    <mat-icon>{{ sidenavOpened ? 'format_indent_decrease' : 'format_indent_increase' }}</mat-icon>
+  </button>
+  <span>{{ title }}</span>
+  <span class="fill-space"></span>
+  <button mat-icon-button matTooltip="首页" (click)="goMain()">
+    <mat-icon>home</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="通知" (click)="goNotice()">
+    <mat-icon [matBadge]="noticeCount" matBadgeColor="accent" matBadgeSize="small">notifications</mat-icon>
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="themeMenu" matTooltip="选择主题">
+    <mat-icon>format_color_fill</mat-icon>
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="settingMenu" matTooltip="设置">
+    <mat-icon>settings</mat-icon>
+  </button>
+  <mat-menu #themeMenu="matMenu">
+    <div class="theme-picker">
+      <mat-grid-list cols="2" rowHeight="1:1">
+        <mat-grid-tile *ngFor="let item of themes" (click)="setTheme(item.style)" [matTooltip]="item.name">
+          <div class="theme-warp" mat-menu-item>
+            <div class="theme-item">
+              <mat-icon class="theme-icon" *ngIf="item.checked">check_circle</mat-icon>
+              <div class="theme-primary" [style.background]="item.primary"></div>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </mat-menu>
+  <mat-menu #settingMenu="matMenu">
+    <button [style.max-width.px]="128" mat-menu-item (click)="goUser()">
+      <mat-icon color="primary">person</mat-icon>
+      <span class="tp" [matTooltip]="user.name" *ngIf="!!user">{{ user.name }}</span>
+    </button>
+    <button mat-menu-item (click)="editPassword()">
+      <mat-icon color="accent">edit</mat-icon>
+      <span class="ta">修改密码</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="exitApp()">
+      <mat-icon color="warn">exit_to_app</mat-icon>
+      <span class="tw">退出登录</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<mat-sidenav-container class="app-container">
+  <mat-sidenav class="app-sidenav" [(mode)]="sidenavMode" [(opened)]="sidenavOpened">
+    <mat-nav-list style="padding-top: 0px" *ngIf="!!home">
+      <a mat-list-item (click)="openMenu(home)">
+        <mat-icon class="home-icon" color="primary" mat-list-icon *ngIf="!!home.matIcon">{{ home.matIcon }}</mat-icon>
+        <span class="home-menu">{{ home.name }}</span>
+        <span class="fill-space"></span>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </a>
+    </mat-nav-list>
+    <mat-accordion multi="false" displayMode="flat">
+      <mat-expansion-panel *ngFor="let item of menus;let first = first" [expanded]="first && !home">
+        <mat-expansion-panel-header collapsedHeight="36px" expandedHeight="36px">
+          <mat-panel-title>
+            <mat-icon color="primary" *ngIf="!!item.matIcon">{{ item.matIcon }}</mat-icon>
+            <span class="main-menu">{{ item.name }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list *ngIf="!!item.children && item.children.length > 0">
+          <a mat-list-item *ngFor="let child of item.children" (click)="openMenu(child)">
+            <mat-icon color="accent" mat-list-icon *ngIf="!!child.matIcon">{{ child.matIcon }}</mat-icon>
+            <span>{{ child.name }}</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-sidenav>
+  <mat-sidenav-content class="app-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<mat-toolbar class="app-footer" color="accent">
+  <span>{{ copyright }}</span>
+  <span class="fill-space"></span>
+  <span>{{ currentTime | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+</mat-toolbar>
+
+<ng-template #passwordTemplate>
+  <div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+    <form class="app-form" (ngSubmit)="submitPasswordForm()" [formGroup]="passwordForm">
+      <h2 mat-dialog-title cdkDragHandle [style.cursor]="'move'">修改密码</h2>
+      <div mat-dialog-content>
+        <mat-grid-list cols="1" rowHeight="80px">
+          <mat-grid-tile>
+            <mat-form-field>
+              <input type="password" matInput autocomplete="off" placeholder="旧密码" formControlName="oldPassword"
+                (ngModelChange)="validateNewPassword()" required>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+              <input type="password" matInput autocomplete="off" placeholder="新密码" formControlName="newPassword"
+                (ngModelChange)="validateConfirmPassword()" required>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+              <input type="password" matInput autocomplete="off" placeholder="确认密码" formControlName="confirmPassword"
+                required>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      <div mat-dialog-actions [align]="'end'">
+        <button type="submit" mat-button color="primary">
+          <mat-icon>save</mat-icon>
+          <span>保存</span>
+        </button>
+        <button type="button" mat-button mat-dialog-close color="accent" cdkFocusInitial>
+          <mat-icon>close</mat-icon>
+          <span>关闭</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

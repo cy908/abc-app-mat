@@ -1,0 +1,45 @@
+<div class="app-info" [@slideToLeft]>
+  <mat-toolbar>
+    <button type="button" mat-flat-button color="warn" (click)="goBack()">
+      <mat-icon>undo</mat-icon>
+      <span>返回</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">角色详情</span>
+    </button>
+  </mat-toolbar>
+  <mat-grid-list [cols]="cols" rowHeight="80px" *ngIf="!!accessLog">
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>访问时间</b><b>：</b></span>
+      <span>{{ accessLog.accessTime | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>访问IP</b><b>：</b></span>
+      <span>{{ accessLog.accessIP }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>访问用户</b><b>：</b></span>
+      <span>{{ accessLog.accessUser }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>访问URI</b><b>：</b></span>
+      <span>{{ accessLog.accessURI }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="cols">
+      <span>&nbsp;&nbsp;</span>
+      <span><b>访问UA</b><b>：</b></span>
+      <span>{{ accessLog.accessUA }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

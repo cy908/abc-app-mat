@@ -1,0 +1,51 @@
+<div class="app-info" [@slideToLeft]>
+  <mat-toolbar>
+    <button type="button" mat-flat-button color="warn" (click)="goBack()">
+      <mat-icon>undo</mat-icon>
+      <span>返回</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled *ngIf="!!dictType">
+      <span class="tp">字典类型：</span>
+      <span class="ta">{{ dictType.name }}</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">字典详情</span>
+    </button>
+  </mat-toolbar>
+  <mat-grid-list [cols]="cols" rowHeight="80px" *ngIf="!!dict">
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>ID</b><b>：</b></span>
+      <span>{{ dict.id }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>名称</b><b>：</b></span>
+      <span>{{ dict.name }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>排序</b><b>：</b></span>
+      <span>{{ dict.order }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>状态</b><b>：</b></span>
+      <mat-icon color="primary" *ngIf="dict.enable" matTooltip="启用">check_circle_outline</mat-icon>
+      <mat-icon color="warn" *ngIf="!dict.enable" matTooltip="禁用">highlight_off</mat-icon>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="cols">
+      <span>&nbsp;&nbsp;</span>
+      <span><b>备注</b><b>：</b></span>
+      <span>{{ dict.note }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

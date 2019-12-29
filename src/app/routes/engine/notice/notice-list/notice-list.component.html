@@ -1,0 +1,74 @@
+<div class="app-list" [@slideToTop]>
+  <mat-toolbar>
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <mat-form-field color="primary" floatLabel="never">
+        <input matInput placeholder="关键字" formControlName="search">
+      </mat-form-field>
+      <span>&nbsp;</span>
+      <button type="submit" mat-flat-button color="primary">
+        <mat-icon>search</mat-icon>
+        <span>查询</span>
+      </button>
+    </form>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">通知列表</span>
+    </button>
+  </mat-toolbar>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>序号</span>
+      </th>
+      <td mat-cell *matCellDef="let index = index">
+        <span>{{ index + 1 }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>通知标题</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{ element.title }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>通知时间</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{ element.startTime | date: 'yyyy-MM-dd' }}</span>
+        <span>&nbsp;~&nbsp;</span>
+        <span>{{ element.endTime | date: 'yyyy-MM-dd' }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>操作</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button type="button" mat-flat-button color="primary" (click)="goInfo(element.id)">
+          <span>查看</span>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="['select', 'index', 'title', 'time', 'actions']">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['select', 'index', 'title', 'time', 'actions'];"></tr>
+  </table>
+  <mat-paginator [length]="totalCount" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    showFirstLastButtons (page)="page($event)"></mat-paginator>
+</div>

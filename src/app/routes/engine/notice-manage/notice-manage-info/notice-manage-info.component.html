@@ -1,0 +1,99 @@
+<div class="app-info" [@slideToLeft]>
+  <mat-toolbar>
+    <button type="button" mat-flat-button color="warn" (click)="goBack()">
+      <mat-icon>undo</mat-icon>
+      <span>返回</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">通知详情</span>
+    </button>
+  </mat-toolbar>
+  <mat-accordion class="accordion" multi>
+    <mat-expansion-panel [expanded]="true" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="title">
+          <span>通知信息</span>
+        </mat-panel-title>
+        <mat-panel-description class="description">
+          <span></span>
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list [cols]="1" rowHeight="80px" *ngIf="!!notice">
+        <mat-grid-tile>
+          <span>&nbsp;&nbsp;</span>
+          <span><b>通知标题</b><b>：</b></span>
+          <span>{{ notice.title }}</span>
+          <span class="fill-space"></span>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list [cols]="cols" rowHeight="80px" *ngIf="!!notice">
+        <mat-grid-tile>
+          <span>&nbsp;&nbsp;</span>
+          <span><b>开始日期</b><b>：</b></span>
+          <span>{{ notice.startTime | date: 'yyyy-MM-dd' }}</span>
+          <span class="fill-space"></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>&nbsp;&nbsp;</span>
+          <span><b>结束日期</b><b>：</b></span>
+          <span>{{ notice.endTime | date: 'yyyy-MM-dd' }}</span>
+          <span class="fill-space"></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>&nbsp;&nbsp;</span>
+          <span><b>状态</b><b>：</b></span>
+          <mat-icon color="primary" *ngIf="notice.enable" matTooltip="启用">check_circle_outline</mat-icon>
+          <mat-icon color="warn" *ngIf="!notice.enable" matTooltip="禁用">highlight_off</mat-icon>
+          <span class="fill-space"></span>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list [cols]="1" rowHeight="200px" *ngIf="!!notice">
+        <mat-grid-tile>
+          <span>&nbsp;&nbsp;</span>
+          <span><b>通知内容</b><b>：</b></span>
+          <div class="notice-warp scrollbar" [innerHTML]="getHtml(notice.content)">
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="title">
+          <span>部门信息</span>
+        </mat-panel-title>
+        <mat-panel-description class="description">
+          <span></span>
+          <mat-icon>work</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="true">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)" [disabled]="true">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>
+            <span>名称</span>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngFor="let _ of element.order.substr(element.orderTopSize).split('')">&nbsp;&nbsp;</span>
+            <span>{{ element.name }}</span>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['select', 'name']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['select', 'name'];"></tr>
+      </table>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

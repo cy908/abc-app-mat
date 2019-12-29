@@ -1,0 +1,104 @@
+<div class="app-info" [@slideToTop]>
+  <mat-toolbar>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">用户详情</span>
+    </button>
+  </mat-toolbar>
+  <mat-grid-list [cols]="cols" rowHeight="80px" *ngIf="!!user">
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>用户名</b><b>：</b></span>
+      <span>{{ user.username }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>姓名</b><b>：</b></span>
+      <span>{{ user.name }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>编号</b><b>：</b></span>
+      <span>{{ user.code }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>部门</b><b>：</b></span>
+      <span *ngIf="!!user.department">{{ user.department.name }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>职务</b><b>：</b></span>
+      <span>{{ user.title }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>身份证号</b><b>：</b></span>
+      <span>{{ user.card }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>手机</b><b>：</b></span>
+      <span>{{ user.phone }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>邮箱</b><b>：</b></span>
+      <span>{{ user.email }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>地址</b><b>：</b></span>
+      <span>{{ user.address }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>生日</b><b>：</b></span>
+      <span>{{ user.birthday | date: 'yyyy-MM-dd' }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>性别</b><b>：</b></span>
+      <span *ngIf="user.gender == 0">未知</span>
+      <span *ngIf="user.gender == 1">男</span>
+      <span *ngIf="user.gender == 2">女</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>状态</b><b>：</b></span>
+      <mat-icon color="primary" *ngIf="user.enable" matTooltip="启用">check_circle_outline</mat-icon>
+      <mat-icon color="warn" *ngIf="!user.enable" matTooltip="禁用">highlight_off</mat-icon>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>创建时间</b><b>：</b></span>
+      <span>{{ user.createTime | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <span>&nbsp;&nbsp;</span>
+      <span><b>更新时间</b><b>：</b></span>
+      <span>{{ user.updateTime | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="cols">
+      <span>&nbsp;&nbsp;</span>
+      <span><b>备注</b><b>：</b></span>
+      <span>{{ user.note }}</span>
+      <span class="fill-space"></span>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

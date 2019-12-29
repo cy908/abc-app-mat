@@ -1,0 +1,66 @@
+<div class="app-form" [@slideToLeft]>
+  <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-toolbar>
+      <button type="button" mat-flat-button color="warn" (click)="goBack()">
+        <mat-icon>undo</mat-icon>
+        <span>返回</span>
+      </button>
+      <span>&nbsp;</span>
+      <button type="submit" mat-flat-button color="primary">
+        <mat-icon>save</mat-icon>
+        <span>保存</span>
+      </button>
+      <span class="fill-space"></span>
+      <button mat-button disabled *ngIf="!!parentDepartment">
+        <span class="tp">父级部门：</span>
+        <span class="ta">{{ parentDepartment.name }}</span>
+      </button>
+      <span class="fill-space"></span>
+      <button mat-button disabled>
+        <mat-icon color="primary">place</mat-icon>
+        <span class="ta">修改部门</span>
+      </button>
+    </mat-toolbar>
+    <mat-grid-list [cols]="cols" rowHeight="80px">
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="名称" formControlName="name" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="代码" formControlName="code">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="电话" formControlName="phone">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="地址" formControlName="address">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <span>&nbsp;&nbsp;</span>
+        <span><b>状态</b><b>：</b></span>
+        <mat-slide-toggle formControlName="enable" #statusToggle>
+          <span>{{ statusToggle.checked ? '启用' : '禁用' }}</span>
+        </mat-slide-toggle>
+        <span class="fill-space"></span>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <span>&nbsp;&nbsp;</span>
+        <span><b>排序</b><b>：</b></span>
+        <span *ngIf="!!department">{{ department.order }}</span>
+        <span class="fill-space"></span>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="cols">
+        <mat-form-field>
+          <input matInput placeholder="备注" formControlName="note">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>

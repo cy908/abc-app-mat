@@ -1,0 +1,87 @@
+<div class="app-info" [@slideToLeft]>
+  <mat-toolbar>
+    <button type="button" mat-flat-button color="warn" (click)="goBack()">
+      <mat-icon>undo</mat-icon>
+      <span>返回</span>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-button disabled>
+      <mat-icon color="primary">place</mat-icon>
+      <span class="ta">访问图表</span>
+    </button>
+  </mat-toolbar>
+  <div [style.padding.px]="8">
+    <mat-grid-list [cols]="cols" rowHeight="300px" gutterSize="8px">
+      <mat-grid-tile [colspan]="cols" appWatchSize (widthChange)="byMinute.changeWidth($event - widthOffset)"
+        (heightChange)="byMinute.changeHeight($event - heightOffset)">
+        <mat-card>
+          <mat-card-title>
+            <span class="tp">60分钟访问情况</span>
+            <button mat-icon-button color="accent" matTooltip="刷新" (click)="byMinute.refreshChart()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-content>
+            <app-stat-by-type statType="byMinute" #byMinute></app-stat-by-type>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile appWatchSize (widthChange)="byHour.changeWidth($event - widthOffset)"
+        (heightChange)="byHour.changeHeight($event - heightOffset)">
+        <mat-card>
+          <mat-card-title>
+            <span class="tp">24小时访问情况</span>
+            <button mat-icon-button color="accent" matTooltip="刷新" (click)="byHour.refreshChart()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-content>
+            <app-stat-by-type statType="byHour" #byHour></app-stat-by-type>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile appWatchSize (widthChange)="byDay.changeWidth($event - widthOffset)"
+        (heightChange)="byDay.changeHeight($event - heightOffset)">
+        <mat-card>
+          <mat-card-title>
+            <span class="tp">30天访问情况</span>
+            <button mat-icon-button color="accent" matTooltip="刷新" (click)="byDay.refreshChart()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-content>
+            <app-stat-by-type statType="byDay" #byDay></app-stat-by-type>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile appWatchSize (widthChange)="byMonth.changeWidth($event - widthOffset)"
+        (heightChange)="byMonth.changeHeight($event - heightOffset)">
+        <mat-card>
+          <mat-card-title>
+            <span class="tp">按月查看</span>
+            <button mat-icon-button color="accent" matTooltip="刷新" (click)="byMonth.refreshChart()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-content>
+            <app-stat-by-type chartType="column" statType="byMonth" #byMonth></app-stat-by-type>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile appWatchSize (widthChange)="byYear.changeWidth($event - widthOffset)"
+        (heightChange)="byYear.changeHeight($event - heightOffset)">
+        <mat-card>
+          <mat-card-title>
+            <span class="tp">按年查看</span>
+            <button mat-icon-button color="accent" matTooltip="刷新" (click)="byYear.refreshChart()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-content>
+            <app-stat-by-type chartType="column" statType="byYear" #byYear></app-stat-by-type>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

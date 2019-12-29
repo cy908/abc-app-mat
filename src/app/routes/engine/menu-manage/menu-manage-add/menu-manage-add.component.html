@@ -1,0 +1,72 @@
+<div class="app-form" [@slideToLeft]>
+  <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-toolbar>
+      <button type="button" mat-flat-button color="warn" (click)="goBack()">
+        <mat-icon>undo</mat-icon>
+        <span>返回</span>
+      </button>
+      <span>&nbsp;</span>
+      <button type="submit" mat-flat-button color="primary">
+        <mat-icon>save</mat-icon>
+        <span>保存</span>
+      </button>
+      <span>&nbsp;</span>
+      <mat-checkbox formControlName="keepOn">继续添加</mat-checkbox>
+      <span class="fill-space"></span>
+      <button mat-button disabled *ngIf="!!parentMenu">
+        <span class="tp">父级菜单：</span>
+        <span class="ta">{{ parentMenu.name }}</span>
+      </button>
+      <span class="fill-space"></span>
+      <button mat-button disabled>
+        <mat-icon color="primary">place</mat-icon>
+        <span class="ta">添加菜单</span>
+      </button>
+    </mat-toolbar>
+    <mat-grid-list [cols]="cols" rowHeight="80px">
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="名称" formControlName="name" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="地址" formControlName="url">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="图标" formControlName="matIcon">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="antd 图标" formControlName="antdIcon">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="antd 图标主题" formControlName="antdIconTheme">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput placeholder="antd 图标双色" formControlName="antdIconTwotone">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <span>&nbsp;&nbsp;</span>
+        <span><b>状态</b><b>：</b></span>
+        <mat-slide-toggle formControlName="enable" #statusToggle>
+          <span>{{ statusToggle.checked ? '启用' : '禁用' }}</span>
+        </mat-slide-toggle>
+        <span class="fill-space"></span>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="cols">
+        <mat-form-field>
+          <input matInput placeholder="备注" formControlName="note">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
