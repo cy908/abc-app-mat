@@ -90,6 +90,10 @@ export class StatByTypeComponent implements OnInit, AfterViewInit {
     min = Math.floor(min * 0.9);
     max = Math.ceil(max * 1.1);
     if (!!this.chart) {
+      this.chart.scale('value', {
+        min: min,
+        max: max,
+      });
       this.chart.changeData(data);
       return;
     }
